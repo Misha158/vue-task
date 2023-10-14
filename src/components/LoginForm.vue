@@ -16,6 +16,7 @@
             placeholder="Username"
             v-model="username"
             :class="{ hasError: errors.length > 0 }"
+            ref="inputField"
           />
           <span>{{ errors[0] }}</span>
         </validation-provider>
@@ -99,6 +100,9 @@ export default {
 
       this.$router.push("/profile");
     },
+  },
+  mounted() {
+    this.$refs.inputField.focus();
   },
 };
 </script>

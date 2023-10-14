@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import LoginPage from "../pages/LoginPage.vue";
+import ProfilePage from "../pages/ProfilePage.vue";
 
 Vue.use(VueRouter);
 
@@ -12,6 +13,11 @@ const router = new VueRouter({
       path: "/",
       name: "home",
       component: LoginPage,
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: ProfilePage,
     },
   ],
 });
