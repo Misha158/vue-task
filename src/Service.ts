@@ -1,9 +1,5 @@
 import axios, { AxiosError } from "axios";
-
-interface User {
-  username: string;
-  phone: string;
-}
+import type { User } from "@/store";
 
 export class Service {
   static async getUsers(): Promise<User[] | undefined> {

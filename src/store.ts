@@ -5,9 +5,34 @@ import router from "./router";
 
 Vue.use(Vuex);
 
+export interface User {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  address: {
+    street: string;
+    suite: string;
+    city: string;
+    zipcode: string;
+    geo: {
+      lat: string;
+      lng: string;
+    };
+  };
+  phone: string;
+  website: string;
+  company: {
+    name: string;
+    catchPhrase: string;
+    bs: string;
+  };
+}
+
 const store = new Vuex.Store({
   state: {
     loginError: false,
+    userInfo: {} as User,
   },
   mutations: {
     async onLogin(state, credentials: { username: string; phone: string }) {
@@ -18,16 +43,17 @@ const store = new Vuex.Store({
         return;
       }
 
-      const isAuth = users.find(
+      const authUserInfo = users.find(
         ({ username, phone }) =>
           username === credentials.username && phone === credentials.phone
       );
 
-      if (!isAuth) {
+      if (!authUserInfo) {
         state.loginError = true;
         return;
       }
 
+      state.userInfo = authUserInfo;
       router.push("/profile");
     },
   },

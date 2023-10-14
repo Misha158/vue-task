@@ -1,13 +1,15 @@
 <script lang="ts">
 import Vue from "vue";
+import UserInfo from "@/components/UserInfo.vue";
 
 export default Vue.extend({
+  components: { UserInfo },
   methods: {},
 });
 </script>
 
 <template>
-  <div>test</div>
+  <UserInfo :user="$store.state.userInfo" />
 </template>
 
 <style lang="scss" scoped></style>
