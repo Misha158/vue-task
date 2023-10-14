@@ -2,6 +2,8 @@ import Vue from "vue";
 
 import App from "./App.vue";
 import router from "./router";
+import store from "./store";
+
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 
@@ -14,6 +16,7 @@ extend("required", {
 
 new Vue({
   router,
+  store,
   components: {
     ValidationProvider,
   },
