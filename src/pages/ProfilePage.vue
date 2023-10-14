@@ -2,19 +2,12 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  methods: {
-    increment() {
-      this.$store.dispatch("increment");
-    },
-  },
+  methods: {},
 });
 </script>
 
 <template>
-  <div>
-    <p>Count: {{ $store.getters.getCount }}</p>
-    <button @click="increment">Increment</button>
-  </div>
+  <div>test</div>
 </template>
 
 <style lang="scss" scoped></style>

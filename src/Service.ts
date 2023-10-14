@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 
 interface User {
   username: string;
-  email: string;
+  phone: string;
 }
 
 export class Service {
@@ -11,7 +11,7 @@ export class Service {
       const { data } = await axios.get<User[]>(
         "https://jsonplaceholder.typicode.com/users"
       );
-
+      console.log("Data", data);
       return data;
     } catch (error) {
       alert("login error");

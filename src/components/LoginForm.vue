@@ -41,7 +41,9 @@
         >
           Login
         </button>
-        <div class="login-error" v-if="loginError">Login error</div>
+        <div class="login-error" v-if="$store.state.loginError">
+          Login error
+        </div>
       </form>
     </validation-observer>
   </div>
@@ -50,12 +52,6 @@
 <script lang="ts">
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import * as yup from "yup";
-import { Service } from "@/Service";
-
-interface User {
-  name: string;
-  phone: string;
-}
 
 const schema = yup.object().shape({
   username: yup
@@ -77,28 +73,14 @@ export default {
   data: () => ({
     username: "",
     phone: "",
-    loginError: false,
   }),
 
   methods: {
     onLogin: async function () {
-      const users = await Service.getUsers();
-
-      if (!users?.length) {
-        this.loginError = true;
-        return;
-      }
-
-      const isAuth = users.find(
-        ({ name, phone }) => name === this.username && phone === this.phone
-      );
-
-      if (!isAuth) {
-        this.loginError = true;
-        return;
-      }
-
-      this.$router.push("/profile");
+      this.$store.commit("onLogin", {
+        username: this.username,
+        phone: this.phone,
+      });
     },
   },
   mounted() {
