@@ -52,6 +52,16 @@ const todosModule: Module<TodosState, RootState> = {
         commit("setTodoIds", finalUserIds);
       }
     },
+    async createNewTodo(
+      { state, commit },
+      payload: {
+        title: string;
+        userId: number;
+        completed: boolean;
+      }
+    ) {
+      return await Service.createTodo(payload);
+    },
   },
 };
 

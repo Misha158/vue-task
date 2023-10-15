@@ -51,4 +51,22 @@ export class Service {
       console.error("todos error", (error as AxiosError).message);
     }
   }
+  static async createTodo(newTodo: {
+    title: string;
+    userId: number;
+    completed: boolean;
+  }) {
+    try {
+      const { data } = await axios.post(
+        "https://jsonplaceholder.typicode.com/todos",
+        {
+          data: newTodo,
+        }
+      );
+      alert("Congrats, new todo has been created!");
+      return data;
+    } catch (error) {
+      console.error("Error adding todo:", error);
+    }
+  }
 }

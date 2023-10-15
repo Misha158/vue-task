@@ -4,9 +4,10 @@ import { mapActions } from "vuex";
 import UserInfo from "@/components/UserInfo.vue";
 import MyFilters from "@/components/MyFilters.vue";
 import TodoList from "@/components/TodoList.vue";
+import CreateTodoForm from "@/components/CreateTodoForm.vue";
 
 export default Vue.extend({
-  components: { UserInfo, MyFilters, TodoList },
+  components: { UserInfo, MyFilters, TodoList, CreateTodoForm },
   data: () => ({
     test: {
       id: 1,
@@ -45,6 +46,7 @@ export default Vue.extend({
   <div>
     <!--  <UserInfo :user="$store.getters.getUserInfo" />-->
     <UserInfo :user="this.test" />
+    <CreateTodoForm />
     <MyFilters :todos="$store.getters.getTodos" />
     <!--  <TodoList :todolist="" />-->
     <TodoList :todos="$store.getters.getTodos" />
