@@ -45,7 +45,7 @@ export default Vue.extend({
   <div>
     <!--  <UserInfo :user="$store.getters.getUserInfo" />-->
     <UserInfo :user="this.test" />
-    <MyFilters />
+    <MyFilters :todos="$store.getters.getTodos" />
     <!--  <TodoList :todolist="" />-->
     <TodoList :todos="$store.getters.getTodos" />
   </div>

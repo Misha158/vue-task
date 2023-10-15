@@ -1,6 +1,20 @@
 import axios, { AxiosError } from "axios";
 import type { TodoItem, User } from "@/types";
 
+const convertStatusFilter = (status?: string) => {
+  if (status === "all") return undefined;
+  if (status === "completed") return true;
+  if (status === "uncompleted") return false;
+  if (status === "favorites") return undefined;
+  return undefined;
+};
+
+const convertUserIdFilter = (userId?: string | number) => {
+  if (userId === "All users") return undefined;
+
+  return userId;
+};
+
 export class Service {
   static async getUsers(): Promise<User[] | undefined> {
     try {
@@ -13,10 +27,21 @@ export class Service {
       console.error("Get users error", (error as AxiosError).message);
     }
   }
-  static async getTodos(): Promise<TodoItem[] | undefined> {
+  static async getTodos(payload: {
+    filters?: {
+      status?: string;
+      userId?: string;
+    };
+  }): Promise<TodoItem[] | undefined> {
     try {
       const { data } = await axios.get<TodoItem[]>(
-        "https://jsonplaceholder.typicode.com/todos"
+        "https://jsonplaceholder.typicode.com/todos",
+        {
+          params: {
+            completed: convertStatusFilter(payload?.filters?.status),
+            userId: convertUserIdFilter(payload?.filters?.userId),
+          },
+        }
       );
       return data;
     } catch (error) {

@@ -1,11 +1,13 @@
-<script>
+<script lang="ts">
 import Vue from "vue";
+import type PropType from "vue";
+import type { User } from "@/types";
 
 export default Vue.extend({
   name: "UserInfo",
   props: {
     user: {
-      type: Object,
+      type: Object as PropType<User>,
       required: true,
     },
   },
