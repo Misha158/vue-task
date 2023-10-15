@@ -13,8 +13,7 @@ const todosModule: Module<TodosState, RootState> = {
   state: {
     todos: [],
     todoUserIds: ["All users"],
-    favoriteTodoIds:
-      JSON.parse(localStorage.getItem("favoriteTodoIds") || "") || [],
+    favoriteTodoIds: JSON.parse(localStorage.getItem("favoriteTodoIds")) || [],
   },
 
   mutations: {
