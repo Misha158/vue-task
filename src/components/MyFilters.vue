@@ -123,8 +123,9 @@ export default Vue.extend({
 <style scoped>
 .container {
   padding: 20px;
-  border: 1px solid #ccc;
   margin-top: 40px;
+  border: 2px solid black;
+  background-color: #c3c3c3;
 }
 .filters {
   display: flex;

@@ -60,9 +60,10 @@ export default Vue.extend({
 
 <style lang="scss">
 .todo-list {
-  border: 1px solid #ccc;
-  border-top: none;
   padding: 20px;
+  border: 2px solid black;
+  border-top: none;
+  background-color: #c3c3c3;
 
   &__title {
     margin-bottom: 10px;

@@ -48,10 +48,11 @@ export default Vue.extend({
 .user-card {
   display: flex;
   justify-content: space-between;
-  border: 1px solid #ccc;
+  flex-wrap: wrap;
   padding: 20px;
   margin-bottom: 10px;
-  flex-wrap: wrap;
+  border: 2px solid black;
+  background-color: #c3c3c3;
 }
 
 .user-info,

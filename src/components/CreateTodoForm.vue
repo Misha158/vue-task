@@ -89,8 +89,9 @@ export default Vue.extend({
   flex-direction: column;
   width: 300px;
   margin-top: 40px;
-  border: 1px solid #ccc;
   padding: 20px;
+  border: 2px solid black;
+  background-color: #c3c3c3;
 }
 
 .create-todo-form__wrapper {
