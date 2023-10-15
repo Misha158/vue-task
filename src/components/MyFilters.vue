@@ -3,6 +3,7 @@ import Vue from "vue";
 import type { PropType } from "vue";
 import type { TodoItem } from "@/types";
 import { mapActions } from "vuex";
+import { debounce } from "lodash";
 
 export default Vue.extend({
   name: "MyFilters",
@@ -16,6 +17,7 @@ export default Vue.extend({
     return {
       statusFilter: "all",
       userFilter: "All users",
+      titleSearch: "",
     };
   },
   methods: {
@@ -25,9 +27,20 @@ export default Vue.extend({
         filters: {
           status: this.statusFilter,
           userId: this.userFilter,
+          title: this.titleSearch,
         },
       });
     },
+    handleInputSearch: debounce(function (event) {
+      this.titleSearch = event.target.value;
+      this.fetchTodos({
+        filters: {
+          status: this.statusFilter,
+          userId: this.userFilter,
+          title: event.target.value,
+        },
+      });
+    }, 800),
   },
 });
 </script>
@@ -56,6 +69,13 @@ export default Vue.extend({
         {{ userId }}
       </option>
     </select>
+    <input
+      name="filterByTitle"
+      type="text"
+      placeholder="Search by title"
+      @input="handleInputSearch"
+      :value="titleSearch"
+    />
   </div>
 </template>
 

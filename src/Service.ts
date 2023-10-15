@@ -31,6 +31,7 @@ export class Service {
     filters?: {
       status?: string;
       userId?: string;
+      title?: string;
     };
   }): Promise<TodoItem[] | undefined> {
     try {
@@ -40,6 +41,7 @@ export class Service {
           params: {
             completed: convertStatusFilter(payload?.filters?.status),
             userId: convertUserIdFilter(payload?.filters?.userId),
+            q: payload?.filters.title,
           },
         }
       );

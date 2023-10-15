@@ -38,6 +38,7 @@ const todosModule: Module<TodosState, RootState> = {
         filters?: {
           status?: string;
           userId?: string;
+          title?: string;
         };
       }
     ) {
