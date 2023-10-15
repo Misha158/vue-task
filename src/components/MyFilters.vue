@@ -48,6 +48,20 @@ export default Vue.extend({
       });
     }, 800),
   },
+  watch: {
+    "$store.getters.getFavoriteTodoIds": {
+      handler() {
+        this.fetchTodos({
+          filters: {
+            status: this.statusFilter,
+            userId: this.userFilter,
+            title: this.titleSearch,
+          },
+        });
+      },
+      immediate: true,
+    },
+  },
 });
 </script>
 
