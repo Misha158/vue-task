@@ -60,7 +60,16 @@ const todosModule: Module<TodosState, RootState> = {
         completed: boolean;
       }
     ) {
-      return await Service.createTodo(payload);
+      const newTodo = await Service.createTodo(payload);
+      state.todos = [
+        {
+          id: newTodo.id,
+          userId: newTodo.data.userId,
+          title: newTodo.data.title,
+          completed: newTodo.data.completed,
+        },
+        ...state.todos,
+      ];
     },
   },
 };
