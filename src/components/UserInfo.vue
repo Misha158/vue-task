@@ -18,27 +18,32 @@ export default Vue.extend({
   <div class="user-card">
     <div class="user-info">
       <h2>{{ user.name }}</h2>
-      <p><strong>Username:</strong> {{ user.username }}</p>
-      <p><strong>Email:</strong> {{ user.email }}</p>
-      <p><strong>Phone:</strong> {{ user.phone }}</p>
-      <p><strong>Website:</strong> {{ user.website }}</p>
+      <ul>
+        <li><strong>Username:</strong> {{ user.username }}</li>
+        <li><strong>Email:</strong> {{ user.email }}</li>
+        <li><strong>Phone:</strong> {{ user.phone }}</li>
+        <li><strong>Website:</strong> {{ user.website }}</li>
+      </ul>
     </div>
     <div class="user-address">
       <h3>Address</h3>
-      <p><strong>Street:</strong> {{ user.address.street }}</p>
-      <p><strong>Suite:</strong> {{ user.address.suite }}</p>
-      <p><strong>City:</strong> {{ user.address.city }}</p>
-      <p><strong>Zipcode:</strong> {{ user.address.zipcode }}</p>
+      <ul>
+        <li><strong>Street:</strong> {{ user.address.street }}</li>
+        <li><strong>Suite:</strong> {{ user.address.suite }}</li>
+        <li><strong>City:</strong> {{ user.address.city }}</li>
+        <li><strong>Zipcode:</strong> {{ user.address.zipcode }}</li>
+      </ul>
     </div>
     <div class="user-company">
       <h3>Company</h3>
-      <p><strong>Name:</strong> {{ user.company.name }}</p>
-      <p><strong>Catch Phrase:</strong> {{ user.company.catchPhrase }}</p>
-      <p><strong>BS:</strong> {{ user.company.bs }}</p>
+      <ul>
+        <li><strong>Name:</strong> {{ user.company.name }}</li>
+        <li><strong>Catch Phrase:</strong> {{ user.company.catchPhrase }}</li>
+        <li><strong>BS:</strong> {{ user.company.bs }}</li>
+      </ul>
     </div>
   </div>
 </template>
-
 <style>
 .user-card {
   display: flex;
@@ -62,9 +67,16 @@ export default Vue.extend({
   font-weight: bold;
 }
 
-.user-info p,
-.user-address p,
-.user-company p {
+.user-info ul,
+.user-address ul,
+.user-company ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.user-info li,
+.user-address li,
+.user-company li {
   margin: 5px 0;
 }
 
