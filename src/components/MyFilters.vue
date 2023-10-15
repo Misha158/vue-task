@@ -18,6 +18,12 @@ export default Vue.extend({
       statusFilter: "all",
       userFilter: "All users",
       titleSearch: "",
+      options: [
+        { value: "all", label: "All" },
+        { value: "completed", label: "Completed" },
+        { value: "uncompleted", label: "Uncompleted" },
+        { value: "favorites", label: "Favorites" },
+      ],
     };
   },
   methods: {
@@ -53,10 +59,13 @@ export default Vue.extend({
       id="status-filter"
       @change="handleFilterChange"
     >
-      <option value="all">All</option>
-      <option value="completed">Completed</option>
-      <option value="uncompleted">Uncompleted</option>
-      <option value="favorites">Favorites</option>
+      <option
+        v-for="option in options"
+        :value="option.value"
+        :key="option.value"
+      >
+        {{ option.label }}
+      </option>
     </select>
 
     <label for="user-filter">User ID:</label>

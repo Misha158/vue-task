@@ -44,11 +44,10 @@ export default Vue.extend({
 
 <template>
   <div>
-    <!--  <UserInfo :user="$store.getters.getUserInfo" />-->
+    <!--    <UserInfo :user="$store.getters.getUserInfo" />-->
     <UserInfo :user="this.test" />
     <CreateTodoForm />
     <MyFilters :todos="$store.getters.getTodos" />
-    <!--  <TodoList :todolist="" />-->
     <TodoList :todos="$store.getters.getTodos" />
   </div>
 </template>

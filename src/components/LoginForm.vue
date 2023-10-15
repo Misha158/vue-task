@@ -103,19 +103,19 @@ export default {
 
   &__header {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     width: 100%;
-    font-size: 17px;
-    font-weight: bold;
-    background-color: #a5a5a5;
-    color: #5f5f5f;
     padding: 10px 0;
     border-radius: 5px 5px 0 0;
+    font-size: 17px;
+    font-weight: 400;
+    background-color: #a5a5a5;
+    color: #5f5f5f;
   }
 
   .login-form {
-    padding: 20px;
+    padding: 15px 20px 20px;
 
     &__header {
       font-size: 15px;

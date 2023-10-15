@@ -43,7 +43,8 @@ const authModule: Module<AuthState, RootState> = {
 
       const authUserInfo = users.find(
         ({ username, phone }) =>
-          username === payload.username && phone === payload.phone
+          username.toLowerCase() === payload.username.toLowerCase() &&
+          phone.toLowerCase() === payload.phone.toLowerCase()
       );
 
       if (!authUserInfo) {

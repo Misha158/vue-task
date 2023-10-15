@@ -24,7 +24,7 @@
 header {
   background-color: #474747;
   width: 100%;
-  height: 40px;
+  height: 60px;
 }
 
 main {
@@ -35,6 +35,6 @@ main {
 footer {
   background-color: #474747;
   width: 100%;
-  height: 60px;
+  height: 270px;
 }
 </style>
