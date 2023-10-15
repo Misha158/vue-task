@@ -2,6 +2,7 @@
 import Vue from "vue";
 import type { PropType } from "vue";
 import type { TodoItem } from "@/types";
+import { mapMutations } from "vuex";
 
 export default Vue.extend({
   name: "TodoList",
@@ -9,6 +10,17 @@ export default Vue.extend({
     todos: {
       required: true,
       type: Array as PropType<TodoItem[]>,
+    },
+  },
+  methods: {
+    ...mapMutations(["setFavoriteTodoIds"]),
+    convertStatus(status: string) {
+      if (!status) return "Uncompleted";
+      if (status) return "Completed";
+      if (status === "favorite") return "Favorite";
+    },
+    saveFavoriteTodoIds(id: number, shouldRemoveFromFavorite: boolean) {
+      this.setFavoriteTodoIds({ id, shouldRemoveFromFavorite });
     },
   },
 });
@@ -20,12 +32,27 @@ export default Vue.extend({
     <ul class="list">
       <li v-for="todo in todos" :key="todo.id" class="list-item">
         <div class="todo-info">
-          <p>{{ todo.id }}.&nbsp;</p>
+          <p><strong>Todo id:</strong> {{ todo.id }}</p>
+          <p><strong>User id:</strong> {{ todo.userId }}</p>
+          <p><strong>Status:</strong> {{ convertStatus(todo.completed) }}</p>
+          <p>
+            <strong>Favorite:</strong>
+            {{ $store.getters.getFavoriteTodoIds?.includes(todo.id) }}
+          </p>
+          <span :class="{ completed: todo.completed }"
+            ><strong>Title:</strong> {{ todo.title }}</span
+          >
         </div>
-        <div class="todo-content">
-          <!--          <input type="checkbox" :checked="todo.completed" disabled />-->
-          <span :class="{ completed: todo.completed }">{{ todo.title }}</span>
-        </div>
+        <button
+          @click="
+            saveFavoriteTodoIds(
+              todo.id,
+              $store.getters.getFavoriteTodoIds?.includes(todo.id)
+            )
+          "
+        >
+          Add to favorite
+        </button>
       </li>
     </ul>
   </div>
@@ -46,8 +73,6 @@ export default Vue.extend({
 }
 
 .list-item {
-  display: flex;
-  align-items: center;
   margin-bottom: 10px;
   background-color: #f9f9f9;
   border-radius: 5px;
