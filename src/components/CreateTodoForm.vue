@@ -49,7 +49,9 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   width: 300px;
-  margin: 20px;
+  margin-top: 40px;
+  border: 1px solid #ccc;
+  padding: 20px;
 }
 
 .create-todo-form__title {
@@ -85,5 +87,11 @@ export default Vue.extend({
 
 .create-todo-form__button:active {
   background-color: #3e8e41;
+}
+
+@media screen and (max-width: 768px) {
+  .create-todo-form {
+    width: auto;
+  }
 }
 </style>
