@@ -1,8 +1,23 @@
 <script lang="ts">
 import Vue from "vue";
 import { mapActions } from "vuex";
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  userId: yup.number().min(0),
+});
+
+extend("onlyNumbers", {
+  validate: (value) => schema.isValid({ userId: value }),
+  message: "Only numbers are allowed in this field.",
+});
 
 export default Vue.extend({
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
   data() {
     return {
       userId: null,
@@ -24,24 +39,48 @@ export default Vue.extend({
 </script>
 
 <template>
-  <form class="create-todo-form" v-on:submit.prevent="addTodo">
-    <h2 class="create-todo-form__title">Create todo</h2>
-    <label for="userId" class="create-todo-form__label">User ID:</label>
-    <input
-      v-model="userId"
-      type="number"
-      id="userId"
-      class="create-todo-form__input"
-    />
-    <label for="title" class="create-todo-form__label">Title:</label>
-    <input
-      v-model="title"
-      type="text"
-      id="title"
-      class="create-todo-form__input"
-    />
-    <button type="submit" class="create-todo-form__button">Add</button>
-  </form>
+  <validation-observer v-slot="{ invalid }">
+    <form class="create-todo-form" v-on:submit.prevent="addTodo">
+      <h2 class="create-todo-form__title">Create todo</h2>
+
+      <validation-provider
+        rules="required|onlyNumbers"
+        v-slot="{ errors }"
+        class="create-todo-form__wrapper"
+      >
+        <label for="userId" class="create-todo-form__label">User ID:</label>
+        <input
+          v-model="userId"
+          type="text"
+          id="userId"
+          class="create-todo-form__input"
+        />
+        <span>{{ errors[0] }}</span>
+      </validation-provider>
+      <validation-provider
+        rules="required"
+        v-slot="{ errors }"
+        class="create-todo-form__wrapper"
+      >
+        <label for="title" class="create-todo-form__label">Title:</label>
+        <input
+          v-model="title"
+          type="text"
+          id="title"
+          class="create-todo-form__input"
+        />
+        <span>{{ errors[0] }}</span>
+      </validation-provider>
+
+      <button
+        type="submit"
+        class="create-todo-form__button"
+        :disabled="invalid || !title || !userId"
+      >
+        Add
+      </button>
+    </form>
+  </validation-observer>
 </template>
 
 <style lang="scss">
@@ -52,6 +91,15 @@ export default Vue.extend({
   margin-top: 40px;
   border: 1px solid #ccc;
   padding: 20px;
+}
+
+.create-todo-form__wrapper {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    color: #e74c3c;
+  }
 }
 
 .create-todo-form__title {
@@ -79,14 +127,19 @@ export default Vue.extend({
   border: none;
   border-radius: 4px;
   cursor: pointer;
-}
 
-.create-todo-form__button:hover {
-  background-color: #45a049;
-}
+  &:hover {
+    background-color: #45a049;
+  }
 
-.create-todo-form__button:active {
-  background-color: #3e8e41;
+  &:active {
+    background-color: #3e8e41;
+  }
+
+  &:disabled {
+    background-color: #171717;
+    cursor: not-allowed;
+  }
 }
 
 @media screen and (max-width: 768px) {
