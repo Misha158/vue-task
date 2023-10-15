@@ -9,7 +9,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <UserInfo :user="$store.state.userInfo" />
+  <UserInfo :user="$store.getters.getUserInfo" />
 </template>
 
 <style lang="scss" scoped></style>

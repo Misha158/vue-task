@@ -1,8 +1,52 @@
+<script lang="ts">
+import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
+import { mapActions } from "vuex";
+import * as yup from "yup";
+
+const schema = yup.object().shape({
+  username: yup
+    .string()
+    .matches(/^[\p{L}\s]+$/u, "Only alphabets are allowed for this field "),
+});
+
+extend("noNumbers", {
+  validate: (value) => schema.isValid({ username: value }),
+  message: "Only letters are allowed in this field.",
+});
+
+export default {
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
+
+  data: () => ({
+    username: "",
+    phone: "",
+  }),
+
+  methods: {
+    ...mapActions(["onLogin"]),
+
+    handleLogin: async function () {
+      this.onLogin({
+        username: this.username,
+        phone: this.phone,
+      });
+    },
+  },
+
+  mounted() {
+    this.$refs.inputField.focus();
+  },
+};
+</script>
+
 <template>
   <div class="login">
     <div class="login__header">description</div>
     <validation-observer v-slot="{ invalid }">
-      <form class="login-form" v-on:submit.prevent="onLogin">
+      <form class="login-form" v-on:submit.prevent="handleLogin">
         <div class="login-form__header">description</div>
         <validation-provider
           rules="required|noNumbers"
@@ -41,53 +85,13 @@
         >
           Login
         </button>
-        <div class="login-error" v-if="$store.state.loginError">
+        <div class="login-error" v-if="$store.getters.getLoginError">
           Login error
         </div>
       </form>
     </validation-observer>
   </div>
 </template>
-
-<script lang="ts">
-import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
-import * as yup from "yup";
-
-const schema = yup.object().shape({
-  username: yup
-    .string()
-    .matches(/^[\p{L}\s]+$/u, "Only alphabets are allowed for this field "),
-});
-
-extend("noNumbers", {
-  validate: (value) => schema.isValid({ username: value }),
-  message: "Only letters are allowed in this field.",
-});
-
-export default {
-  components: {
-    ValidationProvider,
-    ValidationObserver,
-  },
-
-  data: () => ({
-    username: "",
-    phone: "",
-  }),
-
-  methods: {
-    onLogin: async function () {
-      this.$store.commit("onLogin", {
-        username: this.username,
-        phone: this.phone,
-      });
-    },
-  },
-  mounted() {
-    this.$refs.inputField.focus();
-  },
-};
-</script>
 
 <style lang="scss">
 .login {

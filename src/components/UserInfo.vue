@@ -1,3 +1,15 @@
+<script>
+export default {
+  name: "UserInfo",
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
+
 <template>
   <div class="user-card">
     <div class="user-info">
@@ -22,18 +34,6 @@
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "UserInfo",
-  props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
-};
-</script>
 
 <style>
 .user-card {
