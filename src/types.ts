@@ -21,3 +21,10 @@ export interface User {
     bs: string;
   };
 }
+
+export interface TodoItem {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}

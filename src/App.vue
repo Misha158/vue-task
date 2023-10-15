@@ -29,6 +29,7 @@ header {
 
 main {
   flex: 1 1 auto;
+  padding: 20px;
 }
 
 footer {

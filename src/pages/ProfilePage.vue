@@ -1,15 +1,54 @@
 <script lang="ts">
 import Vue from "vue";
+import { mapActions } from "vuex";
 import UserInfo from "@/components/UserInfo.vue";
+import MyFilters from "@/components/MyFilters.vue";
+import TodoList from "@/components/TodoList.vue";
 
 export default Vue.extend({
-  components: { UserInfo },
-  methods: {},
+  components: { UserInfo, MyFilters, TodoList },
+  data: () => ({
+    test: {
+      id: 1,
+      name: "Leanne Graham",
+      username: "Bret",
+      email: "Sincere@april.biz",
+      address: {
+        street: "Kulas Light",
+        suite: "Apt. 556",
+        city: "Gwenborough",
+        zipcode: "92998-3874",
+        geo: {
+          lat: "-37.3159",
+          lng: "81.1496",
+        },
+      },
+      phone: "1-770-736-8031 x56442",
+      website: "hildegard.org",
+      company: {
+        name: "Romaguera-Crona",
+        catchPhrase: "Multi-layered client-server neural-net",
+        bs: "harness real-time e-markets",
+      },
+    },
+  }),
+  methods: {
+    ...mapActions(["fetchTodos"]),
+  },
+  mounted() {
+    this.fetchTodos();
+  },
 });
 </script>
 
 <template>
-  <UserInfo :user="$store.getters.getUserInfo" />
+  <div>
+    <!--  <UserInfo :user="$store.getters.getUserInfo" />-->
+    <UserInfo :user="this.test" />
+    <MyFilters />
+    <!--  <TodoList :todolist="" />-->
+    <TodoList :todos="$store.getters.getTodos" />
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

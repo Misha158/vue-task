@@ -1,5 +1,7 @@
 <script>
-export default {
+import Vue from "vue";
+
+export default Vue.extend({
   name: "UserInfo",
   props: {
     user: {
@@ -7,7 +9,7 @@ export default {
       required: true,
     },
   },
-};
+});
 </script>
 
 <template>
@@ -41,7 +43,8 @@ export default {
   justify-content: space-between;
   border: 1px solid #ccc;
   padding: 20px;
-  margin: 20px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 .user-info,
@@ -61,5 +64,17 @@ export default {
 .user-address p,
 .user-company p {
   margin: 5px 0;
+}
+
+@media screen and (max-width: 768px) {
+  .user-card {
+    gap: 40px;
+  }
+
+  .user-info,
+  .user-address,
+  .user-company {
+    flex-basis: 100%;
+  }
 }
 </style>
