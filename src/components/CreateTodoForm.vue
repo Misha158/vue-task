@@ -50,7 +50,7 @@ export default Vue.extend({
       >
         <label for="userId" class="create-todo-form__label">User ID:</label>
         <input
-          v-model="userId"
+          v-model.trim="userId"
           type="text"
           id="userId"
           class="create-todo-form__input"
@@ -64,7 +64,7 @@ export default Vue.extend({
       >
         <label for="title" class="create-todo-form__label">Title:</label>
         <input
-          v-model="title"
+          v-model.trim="title"
           type="text"
           id="title"
           class="create-todo-form__input"

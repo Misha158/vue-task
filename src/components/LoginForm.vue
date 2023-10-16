@@ -58,7 +58,7 @@ export default {
             type="text"
             class="login-form__input"
             placeholder="Username"
-            v-model="username"
+            v-model.trim="username"
             :class="{ hasError: errors.length > 0 }"
             ref="inputField"
           />
@@ -73,7 +73,7 @@ export default {
             type="text"
             class="login-form__input"
             placeholder="Phone Number"
-            v-model="phone"
+            v-model.trim="phone"
           />
           <span>{{ errors[0] }}</span>
         </validation-provider>
