@@ -29,7 +29,8 @@ export default Vue.extend({
 <template>
   <div class="todo-list">
     <h2 class="todo-list__title">Todolist</h2>
-    <ul class="list">
+    <div v-if="!todos.length">Sorry! No todos were found!</div>
+    <ul class="list" v-else>
       <li v-for="todo in todos" :key="todo.id" class="list-item">
         <div class="todo-info">
           <p><strong>Todo id:</strong> {{ todo.id }}</p>
