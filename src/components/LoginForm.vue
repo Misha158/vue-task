@@ -30,10 +30,6 @@ const handleLogin = async () => {
 };
 
 const inputField = ref(null);
-
-onMounted(() => {
-  inputField.value.focus();
-});
 </script>
 
 <template>
@@ -54,7 +50,7 @@ onMounted(() => {
             placeholder="Username"
             v-model.trim="username"
             :class="{ hasError: errors.length > 0 }"
-            ref="inputField"
+            v-focus
           />
           <span>{{ errors[0] }}</span>
         </validation-provider>

@@ -7,12 +7,16 @@ import store from "./store";
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 
+import focusDirective from "./components/focusDirective";
+
 import "./styles/global.scss";
 
 extend("required", {
   ...required,
   message: "This field is required",
 });
+
+Vue.directive("focus", focusDirective);
 
 new Vue({
   router,
