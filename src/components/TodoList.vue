@@ -59,11 +59,12 @@ export default Vue.extend({
 </template>
 
 <style lang="scss">
+@import "../styles/_variables.scss";
 .todo-list {
   padding: 20px;
   border: 2px solid black;
   border-top: none;
-  background-color: #c3c3c3;
+  background-color: $grey-light;
 
   &__title {
     margin-bottom: 10px;
@@ -77,7 +78,7 @@ export default Vue.extend({
 
 .list-item {
   margin-bottom: 10px;
-  background-color: #f9f9f9;
+  background-color: $white;
   border-radius: 5px;
   padding: 15px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -89,6 +90,6 @@ export default Vue.extend({
 
 .completed {
   text-decoration: line-through;
-  color: #888;
+  color: $grey-light2;
 }
 </style>

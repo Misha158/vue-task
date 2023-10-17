@@ -11,6 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
+@import "./styles/_variables.scss";
 .container {
   min-height: 100%;
   display: flex;
@@ -22,7 +23,7 @@
 }
 
 header {
-  background-color: #474747;
+  background-color: $dark-grey;
   width: 100%;
   height: 60px;
 }
@@ -33,7 +34,7 @@ main {
 }
 
 footer {
-  background-color: #474747;
+  background-color: $dark-grey;
   width: 100%;
   height: 270px;
 }

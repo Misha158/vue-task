@@ -7,7 +7,7 @@ import store from "./store";
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 
-import "./global.scss";
+import "./styles/global.scss";
 
 extend("required", {
   ...required,

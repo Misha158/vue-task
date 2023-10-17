@@ -94,12 +94,14 @@ export default {
 </template>
 
 <style lang="scss">
+@import "../styles/_variables.scss";
+
 .login {
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
   border-radius: 5px;
-  background-color: #c3c3c3;
+  background-color: $grey-light;
 
   &__header {
     display: flex;
@@ -110,8 +112,8 @@ export default {
     border-radius: 5px 5px 0 0;
     font-size: 17px;
     font-weight: 400;
-    background-color: #a5a5a5;
-    color: #5f5f5f;
+    background-color: $grey-light2;
+    color: $disabled;
   }
 
   .login-form {
@@ -120,7 +122,7 @@ export default {
     &__header {
       font-size: 15px;
       margin-bottom: 10px;
-      color: #5f5f5f;
+      color: $disabled;
     }
 
     &__wrapper {
@@ -128,19 +130,19 @@ export default {
       margin-bottom: 15px;
 
       span {
-        color: #e74c3c;
+        color: $red;
       }
     }
 
     &__input {
       width: 100%;
       padding: 10px;
-      border: 1px solid #ccc;
+      border: 1px solid $border-grey;
       border-radius: 5px;
     }
 
     &__input.hasError {
-      border: 2px solid #e74c3c;
+      border: 2px solid $red;
       outline: none;
     }
 
@@ -149,24 +151,24 @@ export default {
       font-size: 17px;
       width: 100%;
       padding: 10px;
-      background-color: #519945;
+      background-color: $green;
       color: #fff;
       border: none;
       border-radius: 5px;
       cursor: pointer;
 
       &:hover {
-        background-color: #45a049;
+        background-color: $green;
       }
 
       &:disabled {
-        background-color: #575757;
+        background-color: $disabled;
         cursor: not-allowed;
       }
     }
 
     .login-error {
-      color: #e74c3c;
+      color: $red;
       margin-top: 10px;
     }
   }

@@ -44,7 +44,9 @@ export default Vue.extend({
     </div>
   </div>
 </template>
-<style>
+<style lang="scss">
+@import "../styles/_variables.scss";
+
 .user-card {
   display: flex;
   justify-content: space-between;
@@ -52,7 +54,7 @@ export default Vue.extend({
   padding: 20px;
   margin-bottom: 10px;
   border: 2px solid black;
-  background-color: #c3c3c3;
+  background-color: $grey-light;
 }
 
 .user-info,

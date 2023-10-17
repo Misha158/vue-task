@@ -111,12 +111,13 @@ export default Vue.extend({
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../styles/_variables.scss";
 .container {
   padding: 20px;
   margin-top: 40px;
   border: 2px solid black;
-  background-color: #c3c3c3;
+  background-color: $grey-light;
 }
 .filters {
   display: flex;
@@ -129,7 +130,7 @@ export default Vue.extend({
 .select-style {
   padding: 8px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid $border-grey;
   border-radius: 4px;
 }
 
@@ -141,7 +142,7 @@ export default Vue.extend({
 input {
   /*width: 200px;*/
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid $border-grey;
   border-radius: 5px;
 }
 

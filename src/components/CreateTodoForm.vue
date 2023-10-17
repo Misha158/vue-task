@@ -84,6 +84,8 @@ export default Vue.extend({
 </template>
 
 <style lang="scss">
+@import "../styles/_variables.scss";
+
 .create-todo-form {
   display: flex;
   flex-direction: column;
@@ -91,7 +93,7 @@ export default Vue.extend({
   margin-top: 40px;
   padding: 20px;
   border: 2px solid black;
-  background-color: #c3c3c3;
+  background-color: $grey-light;
 }
 
 .create-todo-form__wrapper {
@@ -99,7 +101,7 @@ export default Vue.extend({
   flex-direction: column;
 
   span {
-    color: #e74c3c;
+    color: $red;
   }
 }
 
@@ -117,28 +119,28 @@ export default Vue.extend({
 .create-todo-form__input {
   padding: 8px;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid $border-grey;
   border-radius: 4px;
 }
 
 .create-todo-form__button {
   padding: 10px 15px;
-  background-color: #4caf50;
+  background-color: $green;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: #45a049;
+    background-color: $green;
   }
 
   &:active {
-    background-color: #3e8e41;
+    background-color: $green;
   }
 
   &:disabled {
-    background-color: #171717;
+    background-color: $black;
     cursor: not-allowed;
   }
 }
