@@ -1,14 +1,39 @@
-<script lang="ts">
-import { ValidationProvider, ValidationObserver } from "vee-validate";
-import { myMixin } from "@/components/mixin";
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
+import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
+import * as yup from "yup";
+import store from "@/store";
 
-export default {
-  mixins: [myMixin],
-  components: {
-    ValidationProvider,
-    ValidationObserver,
-  },
+const schema = yup.object().shape({
+  username: yup
+    .string()
+    .matches(/^[\p{L}\s]+$/u, "Only alphabets are allowed for this field "),
+});
+
+extend("noNumbers", {
+  validate: (value) => schema.isValid({ username: value }),
+  message: "Only letters are allowed in this field.",
+});
+
+const username = ref("");
+const phone = ref("");
+
+const onLogin = (data) => {
+  store.dispatch("onLogin", data);
 };
+
+const handleLogin = async () => {
+  onLogin({
+    username: username.value,
+    phone: phone.value,
+  });
+};
+
+const inputField = ref(null);
+
+onMounted(() => {
+  inputField.value.focus();
+});
 </script>
 
 <template>
