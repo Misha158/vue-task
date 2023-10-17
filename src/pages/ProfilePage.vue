@@ -21,7 +21,7 @@ export default Vue.extend({
   <div>
     <UserInfo :user="$store.getters.getUserInfo" />
     <CreateTodoForm />
-    <MyFilters :todos="$store.getters.getTodos" />
+    <MyFilters />
     <TodoList :todos="$store.getters.getTodos" />
   </div>
 </template>

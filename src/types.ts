@@ -28,3 +28,10 @@ export interface TodoItem {
   title: string;
   completed: boolean;
 }
+
+export enum Statuses {
+  All = "all",
+  Completed = "completed",
+  Uncompleted = "uncompleted",
+  Favorites = "favorites",
+}

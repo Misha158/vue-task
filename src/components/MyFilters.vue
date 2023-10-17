@@ -1,29 +1,20 @@
 <script lang="ts">
 import Vue from "vue";
-import type { PropType } from "vue";
-import type { TodoItem } from "@/types";
+
 import { mapActions } from "vuex";
 import { debounce } from "lodash";
+import { Statuses } from "@/types";
+import { statusOptions } from "@/constants";
 
 export default Vue.extend({
   name: "MyFilters",
-  props: {
-    todos: {
-      type: Array as PropType<TodoItem[]>,
-      required: true,
-    },
-  },
+
   data() {
     return {
-      statusFilter: "all",
+      statusFilter: Statuses.All,
       userFilter: "All users",
       titleSearch: "",
-      options: [
-        { value: "all", label: "All" },
-        { value: "completed", label: "Completed" },
-        { value: "uncompleted", label: "Uncompleted" },
-        { value: "favorites", label: "Favorites" },
-      ],
+      options: statusOptions,
     };
   },
   methods: {
