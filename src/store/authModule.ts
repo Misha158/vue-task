@@ -53,6 +53,7 @@ const authModule: Module<AuthState, RootState> = {
       }
 
       commit("setUserInfo", authUserInfo);
+      localStorage.setItem("auth", "true");
       router.push("/profile");
     },
   },
