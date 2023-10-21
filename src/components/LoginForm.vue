@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
 import * as yup from "yup";
 import store from "@/store";
+import MyButton from "@/components/Button/MyButton.vue";
 
 const schema = yup.object().shape({
   username: yup
@@ -15,8 +16,8 @@ extend("noNumbers", {
   message: "Only letters are allowed in this field.",
 });
 
-const username = ref("");
-const phone = ref("");
+const username = ref("bret");
+const phone = ref("1-770-736-8031 x56442");
 
 const onLogin = (data) => {
   store.dispatch("onLogin", data);
@@ -68,13 +69,11 @@ const inputField = ref(null);
           <span>{{ errors[0] }}</span>
         </validation-provider>
 
-        <button
+        <MyButton
+          :is-disabled="invalid || !username || !phone"
           type="submit"
-          class="login-form__button"
-          :disabled="invalid || !username || !phone"
-        >
-          Login
-        </button>
+          text="Login"
+        />
         <div class="login-error" v-if="$store.getters.getLoginError">
           Login error
         </div>
@@ -134,27 +133,6 @@ const inputField = ref(null);
     &__input.hasError {
       border: 2px solid $red;
       outline: none;
-    }
-
-    &__button {
-      font-weight: 600;
-      font-size: 17px;
-      width: 100%;
-      padding: 10px;
-      background-color: $green;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $green;
-      }
-
-      &:disabled {
-        background-color: $disabled;
-        cursor: not-allowed;
-      }
     }
 
     .login-error {

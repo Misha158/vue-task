@@ -3,6 +3,7 @@ import Vue from "vue";
 import { mapActions } from "vuex";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import * as yup from "yup";
+import MyButton from "@/components/Button/MyButton.vue";
 
 const schema = yup.object().shape({
   userId: yup.number().min(0),
@@ -17,6 +18,7 @@ export default Vue.extend({
   components: {
     ValidationProvider,
     ValidationObserver,
+    MyButton,
   },
   data() {
     return {
@@ -72,13 +74,11 @@ export default Vue.extend({
         <span>{{ errors[0] }}</span>
       </validation-provider>
 
-      <button
+      <MyButton
+        :is-disabled="invalid || !title || !userId"
         type="submit"
-        class="create-todo-form__button"
-        :disabled="invalid || !title || !userId"
-      >
-        Add
-      </button>
+        text="Add"
+      />
     </form>
   </validation-observer>
 </template>

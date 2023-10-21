@@ -2,15 +2,20 @@
 import Vue from "vue";
 import type { PropType } from "vue";
 import type { TodoItem } from "@/types";
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
+import MyButton from "@/components/Button/MyButton.vue";
 
 export default Vue.extend({
+  components: { MyButton },
   name: "TodoList",
   props: {
     todos: {
       required: true,
       type: Array as PropType<TodoItem[]>,
     },
+  },
+  computed: {
+    ...mapGetters(["getFavoriteTodoIds"]),
   },
   methods: {
     ...mapMutations(["setFavoriteTodoIds"]),
@@ -19,8 +24,12 @@ export default Vue.extend({
       if (status) return "Completed";
       if (status === "favorite") return "Favorite";
     },
-    saveFavoriteTodoIds(id: number, shouldRemoveFromFavorite: boolean) {
-      this.setFavoriteTodoIds({ id, shouldRemoveFromFavorite });
+    saveFavoriteTodoIds(todoId: number) {
+      this.setFavoriteTodoIds({
+        id: todoId,
+        shouldRemoveFromFavorite:
+          this.getFavoriteTodoIds?.includes(todoId) || false,
+      });
     },
   },
 });
@@ -44,16 +53,12 @@ export default Vue.extend({
             ><strong>Title:</strong> {{ todo.title }}</span
           >
         </div>
-        <button
-          @click="
-            saveFavoriteTodoIds(
-              todo.id,
-              $store.getters.getFavoriteTodoIds?.includes(todo.id)
-            )
-          "
-        >
-          Add to favorite
-        </button>
+
+        <MyButton
+          :text="'Add to favorite'"
+          :handleClick="() => saveFavoriteTodoIds(todo.id)"
+          :isFullWidth="false"
+        />
       </li>
     </ul>
   </div>
