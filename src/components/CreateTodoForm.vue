@@ -3,7 +3,7 @@ import Vue from "vue";
 import { mapActions } from "vuex";
 import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import * as yup from "yup";
-import MyButton from "@/components/Button/MyButton.vue";
+import MyButton from "@/components/MyButton/MyButton.vue";
 
 const schema = yup.object().shape({
   userId: yup.number().min(0),

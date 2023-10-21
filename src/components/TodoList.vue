@@ -3,7 +3,7 @@ import Vue from "vue";
 import type { PropType } from "vue";
 import type { TodoItem } from "@/types";
 import { mapMutations, mapGetters } from "vuex";
-import MyButton from "@/components/Button/MyButton.vue";
+import MyButton from "@/components/MyButton/MyButton.vue";
 
 export default Vue.extend({
   components: { MyButton },

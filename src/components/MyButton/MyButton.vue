@@ -3,7 +3,10 @@ const props = defineProps({
   text: String,
   type: String,
   isDisabled: Boolean,
-  handleClick: Function,
+  handleClick: {
+    type: Function,
+    default: () => {},
+  },
   isFullWidth: {
     type: Boolean,
     default: true,

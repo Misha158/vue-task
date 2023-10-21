@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
 import * as yup from "yup";
 import store from "@/store";
-import MyButton from "@/components/Button/MyButton.vue";
+import MyButton from "@/components/MyButton/MyButton.vue";
 
 const schema = yup.object().shape({
   username: yup
