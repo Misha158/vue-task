@@ -1,20 +1,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
-import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
-import * as yup from "yup";
+import { ValidationObserver } from "vee-validate";
 import store from "@/store";
 import MyButton from "@/components/MyButton/MyButton.vue";
-
-const schema = yup.object().shape({
-  username: yup
-    .string()
-    .matches(/^[\p{L}\s]+$/u, "Only alphabets are allowed for this field "),
-});
-
-extend("noNumbers", {
-  validate: (value) => schema.isValid({ username: value }),
-  message: "Only letters are allowed in this field.",
-});
+import MyInput from "@/components/MyInput/MyInput.vue";
 
 const username = ref("bret");
 const phone = ref("1-770-736-8031 x56442");
@@ -36,49 +25,35 @@ const inputField = ref(null);
 <template>
   <div class="login">
     <div class="login__header">description</div>
-    <validation-observer v-slot="{ invalid }">
-      <form class="login-form" v-on:submit.prevent="handleLogin">
-        <div class="login-form__header">description</div>
-        <validation-provider
-          rules="required|noNumbers"
-          v-slot="{ errors }"
-          class="login-form__wrapper"
-        >
-          <input
-            name="username"
-            type="text"
-            class="login-form__input"
-            placeholder="Username"
-            v-model.trim="username"
-            :class="{ hasError: errors.length > 0 }"
-            v-focus
-          />
-          <span>{{ errors[0] }}</span>
-        </validation-provider>
-        <validation-provider
-          rules="required"
-          v-slot="{ errors }"
-          class="login-form__wrapper"
-        >
-          <input
-            type="text"
-            class="login-form__input"
-            placeholder="Phone Number"
-            v-model.trim="phone"
-          />
-          <span>{{ errors[0] }}</span>
-        </validation-provider>
+    <form class="login-form" v-on:submit.prevent="handleLogin">
+      <div class="login-form__header">description</div>
+      <validation-observer v-slot="{ invalid }">
+        <MyInput
+          v-model.trim="username"
+          :name="'username'"
+          :type="'text'"
+          :placeholder="'Username'"
+          :autoFocus="true"
+          :rules="'required|noNumbers'"
+        />
 
+        <MyInput
+          v-model.trim="phone"
+          :name="'phone'"
+          :type="'text'"
+          :placeholder="'Phone Number'"
+          :rules="'required'"
+        />
         <MyButton
-          :is-disabled="invalid || !username || !phone"
           type="submit"
           text="Login"
+          :is-disabled="invalid || !username || !phone"
         />
         <div class="login-error" v-if="$store.getters.getLoginError">
           Login error
         </div>
-      </form>
-    </validation-observer>
+      </validation-observer>
+    </form>
   </div>
 </template>
 
@@ -112,27 +87,6 @@ const inputField = ref(null);
       font-size: 15px;
       margin-bottom: 10px;
       color: $disabled;
-    }
-
-    &__wrapper {
-      display: block;
-      margin-bottom: 15px;
-
-      span {
-        color: $red;
-      }
-    }
-
-    &__input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid $border-grey;
-      border-radius: 5px;
-    }
-
-    &__input.hasError {
-      border: 2px solid $red;
-      outline: none;
     }
 
     .login-error {
