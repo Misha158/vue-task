@@ -59,7 +59,7 @@ export default Vue.extend({
   </validation-observer>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../styles/_variables.scss";
 
 .create-todo-form {
@@ -72,48 +72,10 @@ export default Vue.extend({
   background-color: $grey-light;
 }
 
-.create-todo-form__wrapper {
-  display: flex;
-  flex-direction: column;
-
-  span {
-    color: $red;
-  }
-}
-
 .create-todo-form__title {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
-}
-
-.create-todo-form__input {
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid $border-grey;
-  border-radius: 4px;
-}
-
-.create-todo-form__button {
-  padding: 10px 15px;
-  background-color: $green;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $green;
-  }
-
-  &:active {
-    background-color: $green;
-  }
-
-  &:disabled {
-    background-color: $black;
-    cursor: not-allowed;
-  }
 }
 
 @media screen and (max-width: 768px) {

@@ -7,7 +7,7 @@ import store from "./store";
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 
-import focusDirective from "./components/focusDirective";
+import focusDirective from "./utils/directives/focusDirective";
 
 import "./styles/global.scss";
 
