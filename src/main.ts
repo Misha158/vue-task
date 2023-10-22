@@ -11,6 +11,8 @@ import focusDirective from "./components/focusDirective";
 
 import "./styles/global.scss";
 
+import "./utils/validation";
+
 extend("required", {
   ...required,
   message: "This field is required",

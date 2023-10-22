@@ -18,8 +18,6 @@ const handleLogin = async () => {
     phone: phone.value,
   });
 };
-
-const inputField = ref(null);
 </script>
 
 <template>
@@ -30,19 +28,19 @@ const inputField = ref(null);
       <validation-observer v-slot="{ invalid }">
         <MyInput
           v-model.trim="username"
-          :name="'username'"
-          :type="'text'"
-          :placeholder="'Username'"
+          name="username"
+          type="text"
+          placeholder="Username"
           :autoFocus="true"
           :rules="'required|noNumbers'"
         />
 
         <MyInput
           v-model.trim="phone"
-          :name="'phone'"
-          :type="'text'"
-          :placeholder="'Phone Number'"
-          :rules="'required'"
+          name="phone"
+          type="text"
+          placeholder="Phone Number"
+          rules="required"
         />
         <MyButton
           type="submit"

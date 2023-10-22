@@ -1,17 +1,5 @@
 <script lang="ts" setup="">
-import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
-
-import * as yup from "yup";
-const schema = yup.object().shape({
-  username: yup
-    .string()
-    .matches(/^[\p{L}\s]+$/u, "Only alphabets are allowed for this field "),
-});
-
-extend("noNumbers", {
-  validate: (value) => schema.isValid({ username: value }),
-  message: "Only letters are allowed in this field.",
-});
+import { ValidationProvider, ValidationObserver } from "vee-validate";
 
 const props = defineProps({
   label: {
@@ -49,7 +37,7 @@ const onInputChange = (event) => {
 
 <template>
   <div class="form-group">
-    <label :for="name">{{ label }}</label>
+    <label v-if="label" :for="name">{{ label }}:</label>
     <validation-provider :name="name" :rules="rules" v-slot="{ errors }">
       <input
         class="my-input"
@@ -85,5 +73,9 @@ const onInputChange = (event) => {
   display: block;
   color: $red;
   margin: 2px 0 10px 0;
+}
+
+label {
+  font-weight: 600;
 }
 </style>
