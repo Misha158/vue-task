@@ -1,18 +1,58 @@
 <script lang="ts">
 import Vue from "vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import UserInfo from "@/components/UserInfo.vue";
-import MyFilters from "@/components/MyFilters.vue";
+import MyCustomFilters from "@/components/MyCustomFilters.vue";
 import TodoList from "@/components/TodoList.vue";
 import CreateTodoForm from "@/components/CreateTodoForm.vue";
+import { filterConfig } from "@/constants";
 
 export default Vue.extend({
-  components: { UserInfo, MyFilters, TodoList, CreateTodoForm },
+  components: {
+    UserInfo,
+    MyCustomFilters,
+    TodoList,
+    CreateTodoForm,
+  },
+
+  data: () => ({
+    filterConfig,
+  }),
+
   methods: {
     ...mapActions(["fetchTodos"]),
+    onFilterChange: function (filters) {
+      this.fetchTodos({
+        filters,
+      });
+    },
   },
   mounted() {
     this.fetchTodos();
+  },
+
+  computed: {
+    ...mapGetters(["getTodoUserIds", "getTodos", "getTodoUserIds"]),
+    optionsUserId() {
+      return this.getTodoUserIds.map((userId) => ({
+        label: userId,
+        value: userId,
+      }));
+    },
+  },
+
+  watch: {
+    getTodoUserIds: {
+      handler(newVal) {
+        this.filterConfig = this.filterConfig.map((filter) => {
+          if (filter.filterName === "userId") {
+            return { ...filter, options: this.optionsUserId };
+          }
+          return filter;
+        });
+      },
+      immediate: true,
+    },
   },
 });
 </script>
@@ -21,7 +61,10 @@ export default Vue.extend({
   <div>
     <UserInfo :user="$store.getters.getUserInfo" />
     <CreateTodoForm />
-    <MyFilters />
+    <MyCustomFilters
+      :filter-config="this.filterConfig"
+      :onFilterChange="this.onFilterChange"
+    />
     <TodoList :todos="$store.getters.getTodos" />
   </div>
 </template>

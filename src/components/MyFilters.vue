@@ -1,14 +1,15 @@
 <script lang="ts">
 import Vue from "vue";
 
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import { debounce } from "lodash";
 import { Statuses } from "@/types";
 import { statusOptions } from "@/constants";
+import MySelect from "@/components/MySelect/MySelect.vue";
 
 export default Vue.extend({
   name: "MyFilters",
-
+  components: { MySelect },
   data() {
     return {
       statusFilter: Statuses.All,
@@ -53,6 +54,16 @@ export default Vue.extend({
       immediate: true,
     },
   },
+
+  computed: {
+    ...mapGetters(["getTodoUserIds"]),
+    optionsUserId() {
+      return this.getTodoUserIds.map((userId) => ({
+        label: userId,
+        value: userId,
+      }));
+    },
+  },
 });
 </script>
 
@@ -60,43 +71,20 @@ export default Vue.extend({
   <div class="container">
     <h2>Filters</h2>
     <div class="filters">
-      <div class="select-wrapper">
-        <label for="status-filter">Status:</label>
-        <select
-          v-model="statusFilter"
-          id="status-filter"
-          @change="handleFilterChange"
-          class="select-style"
-        >
-          <option
-            v-for="option in options"
-            :value="option.value"
-            :key="option.value"
-            class="option-style"
-          >
-            {{ option.label }}
-          </option>
-        </select>
-      </div>
+      <MySelect
+        :options="options"
+        :handleFilterChange="handleFilterChange"
+        label="My custom select"
+        v-model="statusFilter"
+      />
 
-      <div class="select-wrapper">
-        <label for="user-filter">User ID:</label>
-        <select
-          v-model="userFilter"
-          id="user-filter"
-          @change="handleFilterChange"
-          class="select-style"
-        >
-          <option
-            v-for="userId in this.$store.getters.getTodoUserIds"
-            :key="userId"
-            :value="userId"
-            class="option-style"
-          >
-            {{ userId }}
-          </option>
-        </select>
-      </div>
+      <MySelect
+        :options="optionsUserId"
+        :handleFilterChange="handleFilterChange"
+        label="User ID:"
+        v-model="userFilter"
+      />
+
       <div class="select-wrapper">
         <label for="filterByTitle">Title:</label>
         <input
