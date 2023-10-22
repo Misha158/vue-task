@@ -21,8 +21,8 @@ export default Vue.extend({
 
   methods: {
     ...mapActions(["fetchTodos"]),
-    onFilterChange: function (filters) {
-      this.fetchTodos({
+    onFilterChange: async function (filters) {
+      await this.fetchTodos({
         filters,
       });
     },

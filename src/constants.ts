@@ -22,7 +22,7 @@ interface Option {
 export interface FilterConfig {
   type: string;
   filterName: string;
-  options: Option[];
+  options?: Option[];
 }
 
 export const filterConfig: FilterConfig[] = [
@@ -35,5 +35,9 @@ export const filterConfig: FilterConfig[] = [
     type: "select",
     options: [],
     filterName: "userId",
+  },
+  {
+    type: "input",
+    filterName: "title",
   },
 ];

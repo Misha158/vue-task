@@ -2,6 +2,8 @@
 import type { FilterConfig } from "@/constants";
 import { reactive } from "vue";
 import MySelect from "@/components/MySelect/MySelect.vue";
+import MyInput from "@/components/MyInput/MyInput.vue";
+import { debounce } from "lodash";
 
 const { filterConfig, onFilterChange } = defineProps({
   filterConfig: {
@@ -11,15 +13,19 @@ const { filterConfig, onFilterChange } = defineProps({
 });
 
 const filterStateReduce = filterConfig.reduce((acc, current) => {
-  acc[current.filterName] = current.options?.[0]?.value;
+  acc[current.filterName] = current.options?.[0]?.value || "";
   return acc;
 }, {});
 
 const filterState = reactive(filterStateReduce);
 
-const handleFilterChange = () => {
+const handleFilterChange = (inputValue) => {
   onFilterChange(filterState);
 };
+
+const handleInputSearch = debounce((event) => {
+  onFilterChange(filterState);
+}, 800);
 </script>
 
 <template>
@@ -28,13 +34,24 @@ const handleFilterChange = () => {
       <label :style="{ fontWeight: 600 }">{{
         filter.filterName.toUpperCase()
       }}</label>
-      <MySelect
-        v-model="filterState[filter.filterName]"
-        @change="handleFilterChange"
-        :options="filter.options"
-        :handleFilterChange="handleFilterChange"
-      />
-      <div>State: {{ filterState[filter.filterName] }}</div>
+
+      <div v-if="filter.type === 'select'">
+        <MySelect
+          v-model="filterState[filter.filterName]"
+          :options="filter.options"
+          :handleFilterChange="handleFilterChange"
+        />
+        <div>State: {{ filterState[filter.filterName] }}</div>
+      </div>
+      <div v-if="filter.type === 'input'">
+        <MyInput
+          v-model="filterState[filter.filterName]"
+          @input="handleInputSearch"
+          name="username"
+          :placeholder="filter.filterName"
+        />
+        <div>State: {{ filterState[filter.filterName] }}</div>
+      </div>
     </div>
   </div>
 </template>

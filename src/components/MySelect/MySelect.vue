@@ -9,12 +9,13 @@ const props = defineProps({
 });
 
 const selectedValue = ref(props.value);
-const emit = defineEmits(["input"]);
+const emit = defineEmits(["change", "input"]);
 
 const handleChange = (event) => {
   selectedValue.value = event.target.value;
+  emit("change", selectedValue);
   emit("input", selectedValue);
-  props.handleFilterChange();
+  props.handleFilterChange?.(selectedValue);
 };
 </script>
 
