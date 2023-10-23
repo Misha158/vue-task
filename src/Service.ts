@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import type { TodoItem, User } from "@/types";
+import { sleep } from "@/utils/utils";
 
 const convertStatusFilter = (status?: string) => {
   if (status === "all") return undefined;
@@ -45,6 +46,9 @@ export class Service {
           },
         }
       );
+
+      await sleep();
+
       return data;
     } catch (error) {
       alert("Todos error");
