@@ -5,6 +5,7 @@ import MySelect from "@/components/MySelect/MySelect.vue";
 import MyInput from "@/components/MyInput/MyInput.vue";
 import { debounce } from "lodash";
 import store from "@/store";
+import router from "@/router";
 
 const { filterConfig, onFilterChange } = defineProps({
   filterConfig: {
@@ -14,7 +15,10 @@ const { filterConfig, onFilterChange } = defineProps({
 });
 
 const filterStateReduce = filterConfig.reduce((acc, current) => {
-  acc[current.filterName] = current.options?.[0]?.value || "";
+  const queryParams = router.currentRoute.query;
+
+  acc[current.filterName] =
+    queryParams[current.filterName] || current.options?.[0]?.value || "";
   return acc;
 }, {});
 

@@ -6,6 +6,7 @@ import MyCustomFilters from "@/components/MyCustomFilters.vue";
 import TodoList from "@/components/TodoList.vue";
 import CreateTodoForm from "@/components/CreateTodoForm.vue";
 import { filterConfig } from "@/constants";
+import router from "@/router";
 
 export default Vue.extend({
   components: {
@@ -23,6 +24,7 @@ export default Vue.extend({
   methods: {
     ...mapActions(["fetchTodos"]),
     onFilterChange: async function (filters) {
+      router.push({ path: "/profile", query: filters });
       this.isTodoListIsLoading = true;
       await this.fetchTodos({
         filters,
@@ -31,8 +33,11 @@ export default Vue.extend({
     },
   },
   async mounted() {
+    const queryParams = router.currentRoute.query;
     this.isTodoListIsLoading = true;
-    await this.fetchTodos();
+    await this.fetchTodos({
+      filters: queryParams,
+    });
     this.isTodoListIsLoading = false;
   },
 
