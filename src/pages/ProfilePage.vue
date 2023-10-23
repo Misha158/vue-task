@@ -17,18 +17,23 @@ export default Vue.extend({
 
   data: () => ({
     filterConfig,
+    isTodoListIsLoading: false,
   }),
 
   methods: {
     ...mapActions(["fetchTodos"]),
-    onFilterChange: function (filters) {
-      this.fetchTodos({
+    onFilterChange: async function (filters) {
+      this.isTodoListIsLoading = true;
+      await this.fetchTodos({
         filters,
       });
+      this.isTodoListIsLoading = false;
     },
   },
-  mounted() {
-    this.fetchTodos();
+  async mounted() {
+    this.isTodoListIsLoading = true;
+    await this.fetchTodos();
+    this.isTodoListIsLoading = false;
   },
 
   computed: {
@@ -81,7 +86,10 @@ export default Vue.extend({
       :filter-config="this.filterConfig"
       :onFilterChange="this.onFilterChange"
     />
-    <TodoList :todos="$store.getters.getTodos" />
+    <TodoList
+      :todos="$store.getters.getTodos"
+      :isLoading="isTodoListIsLoading"
+    />
   </div>
 </template>
 

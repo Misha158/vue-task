@@ -34,7 +34,7 @@ watch(filterState, (newState, oldState) => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="filter-container">
     <div v-for="filter in filterConfig" :key="filter.filterName">
       <label :style="{ fontWeight: 600 }">{{
         filter.filterName.toUpperCase()
@@ -61,7 +61,7 @@ watch(filterState, (newState, oldState) => {
 
 <style lang="scss" scoped>
 @import "../styles/_variables.scss";
-.container {
+.filter-container {
   display: flex;
   padding: 20px;
   margin-top: 40px;

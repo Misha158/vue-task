@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div id="app" class="container">
+  <div id="app" class="root-container">
     <header />
     <main>
       <router-view />
@@ -12,10 +12,11 @@
 
 <style lang="scss" scoped>
 @import "./styles/_variables.scss";
-.container {
+.root-container {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+  padding: 0;
 
   main {
     background-color: #545454;

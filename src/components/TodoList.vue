@@ -13,6 +13,7 @@ export default Vue.extend({
       required: true,
       type: Array as PropType<TodoItem[]>,
     },
+    isLoading: Boolean,
   },
   computed: {
     ...mapGetters(["getFavoriteTodoIds"]),
@@ -38,7 +39,12 @@ export default Vue.extend({
 <template>
   <div class="todo-list">
     <h2 class="todo-list__title">Todolist</h2>
-    <div v-if="!todos.length">Sorry! No todos were found!</div>
+
+    <v-progress-circular v-if="isLoading" indeterminate color="primary" />
+
+    <div v-else-if="!todos.length && !isLoading">
+      Sorry! No todos were found!
+    </div>
     <ul class="list" v-else>
       <li v-for="todo in todos" :key="todo.id" class="list-item">
         <div class="todo-info">
@@ -71,6 +77,7 @@ export default Vue.extend({
   border: 2px solid black;
   border-top: none;
   background-color: $grey-light;
+  min-height: 300px;
 
   &__title {
     margin-bottom: 10px;

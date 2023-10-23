@@ -62,6 +62,7 @@ const onInputChange = (event) => {
   padding: 10px;
   border: 1px solid $border-grey;
   border-radius: 5px;
+  background-color: white;
 
   &.hasError {
     border: 2px solid $red;

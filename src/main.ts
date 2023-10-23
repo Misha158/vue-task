@@ -6,23 +6,26 @@ import store from "./store";
 
 import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
+import Vuetify from "vuetify";
 
 import focusDirective from "./utils/directives/focusDirective";
-
-import "./styles/global.scss";
-
 import "./utils/validation";
+
+import "vuetify/dist/vuetify.min.css";
+import "./styles/global.scss";
 
 extend("required", {
   ...required,
   message: "This field is required",
 });
 
+Vue.use(Vuetify);
 Vue.directive("focus", focusDirective);
 
 new Vue({
   router,
   store,
+  vuetify: new Vuetify(),
   components: {
     ValidationProvider,
   },

@@ -41,6 +41,11 @@ const handleChange = (event) => {
   display: flex;
   flex-direction: column;
   margin-right: 20px;
+
+  select {
+    background-color: white;
+    height: 40px;
+  }
 }
 .select-style {
   padding: 8px;
