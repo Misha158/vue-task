@@ -21,8 +21,8 @@ export default Vue.extend({
 
   methods: {
     ...mapActions(["fetchTodos"]),
-    onFilterChange: async function (filters) {
-      await this.fetchTodos({
+    onFilterChange: function (filters) {
+      this.fetchTodos({
         filters,
       });
     },
@@ -32,7 +32,12 @@ export default Vue.extend({
   },
 
   computed: {
-    ...mapGetters(["getTodoUserIds", "getTodos", "getTodoUserIds"]),
+    ...mapGetters([
+      "getTodoUserIds",
+      "getTodos",
+      "getGlobalFilters",
+      "getFavoriteTodoIds",
+    ]),
     optionsUserId() {
       return this.getTodoUserIds.map((userId) => ({
         label: userId,
@@ -52,6 +57,17 @@ export default Vue.extend({
         });
       },
       immediate: true,
+    },
+    getFavoriteTodoIds: {
+      handler() {
+        this.fetchTodos({
+          filters: {
+            status: this.getGlobalFilters?.status,
+            userId: this.getGlobalFilters?.userId,
+            title: this.getGlobalFilters?.title,
+          },
+        });
+      },
     },
   },
 });

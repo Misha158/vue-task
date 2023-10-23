@@ -7,6 +7,7 @@ export interface TodosState {
   todos: TodoItem[];
   todoUserIds: (number | string)[];
   favoriteTodoIds: number[];
+  filters: Object;
 }
 
 const todosModule: Module<TodosState, RootState> = {
@@ -14,6 +15,7 @@ const todosModule: Module<TodosState, RootState> = {
     todos: [],
     todoUserIds: ["All users"],
     favoriteTodoIds: JSON.parse(localStorage.getItem("favoriteTodoIds")) || [],
+    filters: {},
   },
 
   mutations: {
@@ -44,6 +46,9 @@ const todosModule: Module<TodosState, RootState> = {
       );
       state.favoriteTodoIds = [...state.favoriteTodoIds, payload.id];
     },
+    setGlobalFilters(state, payload) {
+      state.filters = payload;
+    },
   },
 
   getters: {
@@ -55,6 +60,9 @@ const todosModule: Module<TodosState, RootState> = {
     },
     getFavoriteTodoIds(state) {
       return state.favoriteTodoIds;
+    },
+    getGlobalFilters(state) {
+      return state.filters;
     },
   },
   actions: {
@@ -69,7 +77,6 @@ const todosModule: Module<TodosState, RootState> = {
       }
     ) {
       const todos = await Service.getTodos(payload);
-
       const isFilterByUserIdNotInit = state.todoUserIds.length === 1;
       if (isFilterByUserIdNotInit) {
         const userIds = todos?.map((todo) => todo.userId);
@@ -77,7 +84,6 @@ const todosModule: Module<TodosState, RootState> = {
 
         commit("setTodoIds", finalUserIds);
       }
-
       if (payload?.filters?.status === "favorites") {
         commit(
           "setTodos",

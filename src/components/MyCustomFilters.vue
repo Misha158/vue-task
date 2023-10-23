@@ -1,9 +1,10 @@
 <script lang="ts" setup="">
 import type { FilterConfig } from "@/constants";
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import MySelect from "@/components/MySelect/MySelect.vue";
 import MyInput from "@/components/MyInput/MyInput.vue";
 import { debounce } from "lodash";
+import store from "@/store";
 
 const { filterConfig, onFilterChange } = defineProps({
   filterConfig: {
@@ -26,6 +27,10 @@ const handleFilterChange = (inputValue) => {
 const handleInputSearch = debounce((event) => {
   onFilterChange(filterState);
 }, 800);
+
+watch(filterState, (newState, oldState) => {
+  store.commit("setGlobalFilters", filterState);
+});
 </script>
 
 <template>
@@ -41,7 +46,6 @@ const handleInputSearch = debounce((event) => {
           :options="filter.options"
           :handleFilterChange="handleFilterChange"
         />
-        <div>State: {{ filterState[filter.filterName] }}</div>
       </div>
       <div v-if="filter.type === 'input'">
         <MyInput
@@ -50,7 +54,6 @@ const handleInputSearch = debounce((event) => {
           name="username"
           :placeholder="filter.filterName"
         />
-        <div>State: {{ filterState[filter.filterName] }}</div>
       </div>
     </div>
   </div>
