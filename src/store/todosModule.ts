@@ -73,6 +73,7 @@ const todosModule: Module<TodosState, RootState> = {
           status?: string;
           userId?: string;
           title?: string;
+          page?: number;
         };
       }
     ) {
@@ -91,17 +92,19 @@ const todosModule: Module<TodosState, RootState> = {
 
         commit("setTodoIds", finalUserIds);
       }
+
+      const newTodos = [...state.todos, ...(todos || [])];
       if (payload?.filters?.status === "favorites") {
         commit(
           "setTodos",
-          todos?.filter((todo) =>
+          newTodos?.filter((todo) =>
             state.favoriteTodoIds.some((id) => id === todo.id)
           )
         );
         return;
       }
 
-      commit("setTodos", todos);
+      commit("setTodos", newTodos);
     },
     async createNewTodo(
       { state, commit },

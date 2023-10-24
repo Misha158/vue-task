@@ -1,6 +1,6 @@
 <script lang="ts">
 import Vue from "vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import UserInfo from "@/components/UserInfo.vue";
 import MyCustomFilters from "@/components/MyCustomFilters.vue";
 import TodoList from "@/components/TodoList.vue";
@@ -19,26 +19,56 @@ export default Vue.extend({
   data: () => ({
     filterConfig,
     isTodoListIsLoading: false,
+    page: 1,
+    isInfinityScrollLoading: false,
   }),
 
   methods: {
     ...mapActions(["fetchTodos"]),
+    ...mapMutations(["setTodos"]),
     onFilterChange: async function (filters) {
+      console.log("filter changed");
+      await this.setTodos([]);
+      this.page = 1;
+
       router.push({ path: "/profile", query: filters });
       this.isTodoListIsLoading = true;
       await this.fetchTodos({
-        filters,
+        filters: { ...filters, page: 1 },
       });
       this.isTodoListIsLoading = false;
     },
   },
+
   async mounted() {
     const queryParams = router.currentRoute.query;
     this.isTodoListIsLoading = true;
     await this.fetchTodos({
-      filters: queryParams,
+      filters: { ...queryParams, page: this.page },
     });
     this.isTodoListIsLoading = false;
+    ///
+
+    const options = {
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    const callback = async (entries, observer) => {
+      if (entries[0].isIntersecting) {
+        this.isInfinityScrollLoading = true;
+        const queryParams = router.currentRoute.query;
+        this.page = this.page + 1;
+        await this.fetchTodos({
+          // filters: { ...queryParams, page: this.page },
+          filters: { ...queryParams, page: this.page },
+        });
+        this.isInfinityScrollLoading = false;
+      }
+    };
+
+    this.observer = new IntersectionObserver(callback, options);
+    this.observer.observe(this.$refs.observable);
   },
 
   computed: {
@@ -94,6 +124,12 @@ export default Vue.extend({
     <TodoList
       :todos="$store.getters.getTodos"
       :isLoading="isTodoListIsLoading"
+    />
+    <div ref="observable" />
+    <v-progress-circular
+      v-if="isInfinityScrollLoading"
+      indeterminate
+      color="primary"
     />
   </div>
 </template>
