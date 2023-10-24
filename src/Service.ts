@@ -44,7 +44,7 @@ export class Service {
             completed: convertStatusFilter(payload?.filters?.status),
             userId: convertUserIdFilter(payload?.filters?.userId),
             q: payload?.filters?.title || undefined,
-            _limit: 5,
+            _limit: 10,
             _page: payload?.filters?.page,
           },
         }

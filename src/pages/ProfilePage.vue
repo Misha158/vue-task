@@ -47,7 +47,8 @@ export default Vue.extend({
       filters: { ...queryParams, page: this.page },
     });
     this.isTodoListIsLoading = false;
-    ///
+
+    //////////INFINITY SCROLL BELOW ///////////
 
     const options = {
       rootMargin: "0px",
@@ -59,8 +60,8 @@ export default Vue.extend({
         this.isInfinityScrollLoading = true;
         const queryParams = router.currentRoute.query;
         this.page = this.page + 1;
+        console.log("intersaction", this.page);
         await this.fetchTodos({
-          // filters: { ...queryParams, page: this.page },
           filters: { ...queryParams, page: this.page },
         });
         this.isInfinityScrollLoading = false;
