@@ -27,7 +27,6 @@ export default Vue.extend({
     ...mapActions(["fetchTodos"]),
     ...mapMutations(["setTodos"]),
     onFilterChange: async function (filters) {
-      console.log("filter changed");
       await this.setTodos([]);
       this.page = 1;
 
@@ -39,14 +38,15 @@ export default Vue.extend({
       this.isTodoListIsLoading = false;
     },
     loadMore: async function () {
-      console.log("loadMore");
-      this.isInfinityScrollLoading = true;
-      const queryParams = router.currentRoute.query;
-      this.page = this.page + 1;
-      await this.fetchTodos({
-        filters: { ...queryParams, page: this.page },
-      });
-      this.isInfinityScrollLoading = false;
+      if (!this.isTodoListIsLoading) {
+        this.isInfinityScrollLoading = true;
+        const queryParams = router.currentRoute.query;
+        this.page = this.page + 1;
+        await this.fetchTodos({
+          filters: { ...queryParams, page: this.page },
+        });
+        this.isInfinityScrollLoading = false;
+      }
     },
   },
 
