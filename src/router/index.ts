@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import LoginPage from "../pages/LoginPage.vue";
 import ProfilePage from "../pages/ProfilePage.vue";
 import ForbiddenPage from "../pages/ForbiddenPage.vue";
+import ProfilePageInfinityScroll from "@/pages/ProfilePageInfinityScroll.vue";
 
 Vue.use(VueRouter);
 
@@ -18,7 +19,7 @@ const router = new VueRouter({
     {
       path: "/profile",
       name: "profile",
-      component: ProfilePage,
+      component: ProfilePageInfinityScroll,
     },
     {
       path: "/forbidden",

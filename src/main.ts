@@ -8,7 +8,8 @@ import { ValidationProvider, extend } from "vee-validate";
 import { required } from "vee-validate/dist/rules";
 import Vuetify from "vuetify";
 
-import focusDirective from "./utils/directives/focusDirective";
+import focusDirective from "@/utils/directives/focusDirective";
+import intersectionDirective from "@/utils/directives/intersactionDirective";
 import "./utils/validation";
 
 import "vuetify/dist/vuetify.min.css";
@@ -21,6 +22,7 @@ extend("required", {
 
 Vue.use(Vuetify);
 Vue.directive("focus", focusDirective);
+Vue.directive("intersection", intersectionDirective);
 
 new Vue({
   router,
