@@ -7,6 +7,7 @@ import TodoList from "@/components/TodoList.vue";
 import CreateTodoForm from "@/components/CreateTodoForm.vue";
 import { filterConfig } from "@/constants";
 import router from "@/router";
+import axios from "axios";
 
 export default Vue.extend({
   components: {
@@ -57,6 +58,38 @@ export default Vue.extend({
       filters: { ...queryParams, page: this.page },
     });
     this.isTodoListIsLoading = false;
+
+    async function fetchData(filter) {
+      if (filter.getOptions) {
+        const { data } = await axios.get(
+          "https://jsonplaceholder.typicode.com/todos"
+        );
+
+        const userIds = [...new Set(data.map((todo) => todo.userId))];
+
+        return {
+          ...filter,
+          options: userIds.map((id, index) => {
+            return {
+              label: !index ? "All users" : id,
+              value: !index ? "All users" : id,
+            };
+          }),
+        };
+      }
+      return filter;
+    }
+
+    const processData = async () => {
+      const newFilterConfigPromises = filterConfig.map((filter) =>
+        fetchData(filter)
+      );
+      const newFilterConfig = await Promise.all(newFilterConfigPromises);
+      return newFilterConfig;
+    };
+
+    const newFilter = await processData();
+    this.filterConfig = newFilter;
   },
 
   computed: {

@@ -23,7 +23,12 @@ export interface FilterConfig {
   type: string;
   filterName: string;
   options?: Option[];
+  getOptions?: Function;
 }
+
+const getOptions = async () => {
+  return [{ label: "test", value: "test" }];
+};
 
 export const filterConfig: FilterConfig[] = [
   {
@@ -35,6 +40,7 @@ export const filterConfig: FilterConfig[] = [
     type: "select",
     options: [],
     filterName: "userId",
+    getOptions,
   },
   {
     type: "input",

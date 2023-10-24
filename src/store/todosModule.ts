@@ -78,20 +78,6 @@ const todosModule: Module<TodosState, RootState> = {
       }
     ) {
       const todos = await Service.getTodos(payload);
-      const isFilterByUserIdNotInit = state.todoUserIds.length === 1;
-      if (isFilterByUserIdNotInit) {
-        const hasFilter =
-          payload.filters?.userId ||
-          payload.filters?.title ||
-          payload.filters?.status;
-
-        const allTodos = hasFilter ? await Service.getTodos({}) : todos;
-        const userIds = allTodos?.map((todo) => todo.userId);
-
-        const finalUserIds = ["All users", ...new Set(userIds)];
-
-        commit("setTodoIds", finalUserIds);
-      }
 
       const newTodos = [...state.todos, ...(todos || [])];
       if (payload?.filters?.status === "favorites") {
